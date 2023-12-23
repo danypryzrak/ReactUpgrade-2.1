@@ -17,12 +17,14 @@ export class Form extends Component {
     ev.preventDefault();
     const name = this.state.name;
 
-    if (
-      this.props.contacts.find(
-        contact => contact.name.toLowerCase() === name.toLowerCase()
-      )
-    ) {
-      return alert(`Contact ${name} already here`);
+    if (this.props.contacts !== null) {
+      if (
+        this.props.contacts.find(
+          contact => contact.name.toLowerCase() === name.toLowerCase()
+        )
+      ) {
+        return alert(`Contact ${name} already here`);
+      }
     }
 
     const newContact = {

@@ -6,17 +6,28 @@ import { Contacts } from './Contacts';
 
 export class App extends Component {
   state = {
-    contacts: [
-      { id: 'id-1', name: 'Rosie Simpson', number: '459-12-56' },
-      { id: 'id-2', name: 'Hermione Kline', number: '443-89-12' },
-      { id: 'id-3', name: 'Eden Clements', number: '645-17-79' },
-      { id: 'id-4', name: 'Annie Copeland', number: '227-91-26' },
-    ],
+    contacts: [],
     filter: '',
   };
 
+  componentDidMount() {
+    const savedContacts = localStorage.getItem('contacts');
+    if (savedContacts !== null) {
+      const contacts = JSON.parse(savedContacts);
+      this.setState({ contacts: contacts });
+    }
+  }
+
+  componentDidUpdate() {
+    localStorage.setItem('contacts', JSON.stringify(this.state.contacts));
+  }
+
   addContact = newContact => {
-    this.setState(state => ({ contacts: [...state.contacts, newContact] }));
+    if (this.state.contacts !== null) {
+      this.setState(state => ({ contacts: [...state.contacts, newContact] }));
+    } else {
+      this.setState({ contacts: [newContact] });
+    }
   };
 
   deleteContact = name => {
@@ -33,9 +44,13 @@ export class App extends Component {
   };
 
   showFiltered = () => {
-    return this.state.contacts.filter(contact =>
-      contact.name.toLowerCase().includes(this.state.filter.toLocaleLowerCase())
-    );
+    if (this.state.contacts !== null) {
+      return this.state.contacts.filter(contact =>
+        contact.name
+          .toLowerCase()
+          .includes(this.state.filter.toLocaleLowerCase())
+      );
+    }
   };
 
   render() {
