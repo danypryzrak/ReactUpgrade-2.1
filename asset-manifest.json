@@ -1,13 +1,13 @@
 {
   "files": {
     "main.css": "/ReactUpgrade-2.1/static/css/main.7acaea2f.css",
-    "main.js": "/ReactUpgrade-2.1/static/js/main.41b6b3ab.js",
+    "main.js": "/ReactUpgrade-2.1/static/js/main.24ecf3d4.js",
     "index.html": "/ReactUpgrade-2.1/index.html",
     "main.7acaea2f.css.map": "/ReactUpgrade-2.1/static/css/main.7acaea2f.css.map",
-    "main.41b6b3ab.js.map": "/ReactUpgrade-2.1/static/js/main.41b6b3ab.js.map"
+    "main.24ecf3d4.js.map": "/ReactUpgrade-2.1/static/js/main.24ecf3d4.js.map"
   },
   "entrypoints": [
     "static/css/main.7acaea2f.css",
-    "static/js/main.41b6b3ab.js"
+    "static/js/main.24ecf3d4.js"
   ]
 }
