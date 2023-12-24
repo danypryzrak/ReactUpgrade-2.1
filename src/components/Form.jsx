@@ -1,25 +1,24 @@
-import { Component } from 'react';
+import { useState } from 'react';
 import { nanoid } from 'nanoid';
 
-export class Form extends Component {
-  state = {
-    name: '',
-    number: '',
-  };
+export const Form = ({ contacts, onSubmit }) => {
+  const [user, setUser] = useState({ name: '', number: '' });
 
-  handleChange = ev => {
+  const handleChange = ev => {
     const name = ev.target.name;
     const value = ev.target.value;
-    this.setState({ [name]: value });
+    setUser(prevState => {
+      return { ...prevState, [name]: value };
+    });
   };
 
-  handleSubmit = ev => {
+  const handleSubmit = ev => {
     ev.preventDefault();
-    const name = this.state.name;
+    const name = user.name;
 
-    if (this.props.contacts !== null) {
+    if (contacts.length > 0) {
       if (
-        this.props.contacts.find(
+        contacts.find(
           contact => contact.name.toLowerCase() === name.toLowerCase()
         )
       ) {
@@ -29,34 +28,32 @@ export class Form extends Component {
 
     const newContact = {
       id: nanoid(),
-      name: this.state.name,
-      number: this.state.number,
+      name: user.name,
+      number: user.number,
     };
-    this.props.onSubmit(newContact);
-    this.setState({ name: '', number: '' });
+    onSubmit(newContact);
+    setUser({ name: '', number: '' });
     ev.currentTarget.reset();
   };
 
-  render() {
-    return (
-      <form onSubmit={this.handleSubmit}>
-        <label>
-          Name
-          <input
-            onChange={this.handleChange}
-            type="text"
-            name="name"
-            pattern="^[\p{L}]+(([' \-][\p{L} ])?[\p{L}]*)*$"
-            title="Name may contain only letters, apostrophe, dash and spaces. For example Adrian, Jacob Mercer, Charles de Batz de Castelmore d'Artagnan"
-            required
-          />
-        </label>
-        <label>
-          Number
-          <input onChange={this.handleChange} name="number" type="tel"></input>
-        </label>
-        <button type="submit">Add contact</button>
-      </form>
-    );
-  }
-}
+  return (
+    <form onSubmit={handleSubmit}>
+      <label>
+        Name
+        <input
+          onChange={handleChange}
+          type="text"
+          name="name"
+          pattern="^[\p{L}]+(([' \-][\p{L} ])?[\p{L}]*)*$"
+          title="Name may contain only letters, apostrophe, dash and spaces. For example Adrian, Jacob Mercer, Charles de Batz de Castelmore d'Artagnan"
+          required
+        />
+      </label>
+      <label>
+        Number
+        <input onChange={handleChange} name="number" type="tel"></input>
+      </label>
+      <button type="submit">Add contact</button>
+    </form>
+  );
+};
